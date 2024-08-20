@@ -25,7 +25,7 @@ export type Embed = {
 local EmbedBuilder = {}
 EmbedBuilder.__index = EmbedBuilder
 
-function EmbedBuilder.new(data: { title: string, description: string?, image: string?, thumnail: string? })
+function EmbedBuilder.new(data: { title: string, description: string?, image: string?, thumbnail: string? })
 	local self = setmetatable({}, EmbedBuilder)
 	local embed: Embed = data or { title = "", description = "", image = { url = "" }, thumbnail = { url = "" } }
 
@@ -65,7 +65,7 @@ function Webhook.new(url: string)
 end
 
 function Webhook:Send(content: string, embeds: { Embed }?)
-	local request = http.request
+	local request = request or http.request or http_request
 	if not request then
 		warn("Executor doesnt support requests not found")
 		return
@@ -74,7 +74,7 @@ function Webhook:Send(content: string, embeds: { Embed }?)
 		Url = self.url,
 		Method = "POST",
 		Headers = { ["Content-Type"] = "application/json" },
-		Body = httpService:JSONEncode({ content, embeds }),
+		Body = httpService:JSONEncode({ content = content, embeds = embeds }),
 	})
 end
 
