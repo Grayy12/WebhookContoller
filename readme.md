@@ -48,11 +48,13 @@ This module provides functionality to create and send Discord webhooks with cust
 Below is an example of how to use the `EmbedBuilder` and `Webhook` classes to send an embed to a Discord webhook:
 
 ```lua
+local WebhookController, EmbedBuilder = loadstring(game:HttpGet("https://raw.githubusercontent.com/Grayy12/WebhookContoller/main/WebHookController.lua",true))()
+
 local webhookUrl = "https://discord.com/api/webhooks/1253160257987936377/uA-CMq-1Cc06Nbc6c6D09XqocmQjUnZeGEaV5VogUDAL2g0Z4CkYIHqo6JCUY_h7KPZP"
 
-local webhook = Webhook.new(webhookUrl)
+local webhook = WebhookController.new(webhookUrl)
 
-local embedBuilder = EmbedBuilder.new({
+local newEmbed = EmbedBuilder.new({
     title = "",
     description = "",
     image = {
@@ -60,11 +62,11 @@ local embedBuilder = EmbedBuilder.new({
     }
 })
 
-embedBuilder:AddField({ name = "Field Name", value = "Field Value", inline = true })
+newEmbed:AddField({ name = "Field Name", value = "Field Value", inline = true })
     :AddField({ name = "Field Name 2", value = "Field Value 2", inline = true })
     :SetAuthor({ name = "Grayy" })
     :SetColor(Color3.new(0.411765, 0.043137, 0.752941))
     :SetFooter({ text = "Footer" })
 
-webhook:Send("Test", { embedBuilder.embed })
+webhook:Send("Test", { newEmbed.embed })
 ```
